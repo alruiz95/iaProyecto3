@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-#img = cv2.imread('input2.png')   #descomentar para probar otro caso
 img = cv2.imread('input3.png')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
@@ -16,8 +15,8 @@ x = np.array(cells)
 train = x[:,:3].reshape(-1,62500).astype(np.float32) # Size = (15,62500)
 test = x[:,3:4].reshape(-1,62500).astype(np.float32) # Size = (5,62500)
 
-print "TRAIN: " + str(len(train))
-print "TEST: " + str(len(test))
+#print "TRAIN: " + str(len(train))
+#print "TEST: " + str(len(test))
 
 # Create labels for train and test data
 k = np.arange(1)
@@ -25,8 +24,8 @@ train_labels = np.repeat(k,15)[:,np.newaxis]
 test_labels = np.repeat(k,5)[:,np.newaxis]
 #test_labels = train_labels.copy()
 
-print "TRAIN_LABELS: " + str(len(train_labels))
-print "TEST_LABELS: " + str(len(test_labels))
+#print "TRAIN_LABELS: " + str(len(train_labels))
+#print "TEST_LABELS: " + str(len(test_labels))
 
 # Initiate kNN, train the data, then test it with test data for k=1
 knn = cv2.KNearest()
@@ -38,7 +37,7 @@ ret,result,neighbours,dist = knn.find_nearest(test,k=1)
 matches = result==test_labels
 correct = np.count_nonzero(matches)
 accuracy = correct*100.0/result.size
-print accuracy
+print str(accuracy)+"%"
 
 
 
