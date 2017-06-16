@@ -4,7 +4,7 @@ import random
 from resizeimage import resizeimage
 from sklearn.neural_network import MLPClassifier
 import pickle
-
+import time
 import os
 
 
@@ -59,24 +59,24 @@ def main():
     capaOculta = capaEntrada+3
     capaSalida = len(firmas)+1
 
-    print salidas[0]
-
-    """print capaEntrada,capaOculta,capaSalida
-    prueba = nn(capaEntrada,capaOculta,capaSalida)
-    """
-
 
     clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(capaOculta,), random_state=1)
 
     print("COMIENZA ENTRENAMIENTO")
     print("")
+    start_time = time.time()
     clf.fit(entradas, salidas)
+    print("--- %s seconds ---" % (time.time() - start_time))
     print("")
     filename = 'finalized_model.sav'
     pickle.dump(clf, open(filename, 'wb'))
     print("Se ha guardado el entrenamiento correctamente ")
     print("RESULTADO")
+    print ("Resultado calculado:")
+    start_time = time.time()
     print clf.predict([entradas[0]])
+    print("--- %s seconds ---" % (time.time() - start_time))
+    print ("Resultado deseado:")
     print salidas[0]
     print("")
 
